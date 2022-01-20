@@ -1,10 +1,9 @@
 # SimpleDB
-- https://gobyexample.com/command-line-arguments
 - https://gobyexample.com/command-line-flags
 
 ## Команды:
 ```
-go run . --sql="INSERT INTO table (id, name, value) VALUES (1, 'test', 'value');"
+go run .\cmd\simple-db\ --sql="INSERT INTO table (id, name, value) VALUES (1, 'test', 'value');"
 ```
 
 ## Хранение

@@ -3,7 +3,7 @@
 
 ## Команды:
 ```
-go run .\cmd\simple-db\ --sql="INSERT INTO table (id, name, value) VALUES (1, 'test', 'value');"
+go run . --sql="INSERT INTO table (id, name, value) VALUES (1, 'test', 'value');"
 ```
 
 ## Хранение

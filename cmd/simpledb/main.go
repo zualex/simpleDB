@@ -5,7 +5,8 @@ import (
 	"fmt"
 	"strings"
 
-	"internal/parser"
+	"github.com/zualex/simpledb/internal/parser"
+	// "internal/parser"
 )
 
 func ParseInsert(sql string) {

@@ -4,17 +4,35 @@ import (
 	"strings"
 )
 
+const CREATE_TABLE = "create table"
+const DROP_TABLE = "drop table"
 const INSERT = "insert"
 const SELECT = "select"
 const UPDATE = "update"
 
+func IsCreateTable(sql string) bool {
+	return isByToken(sql, CREATE_TABLE)
+}
+
+func IsDropTable(sql string) bool {
+	return isByToken(sql, DROP_TABLE)
+}
+
 func IsInsert(sql string) bool {
+	return isByToken(sql, INSERT)
+}
+
+func IsSelect(sql string) bool {
+	return isByToken(sql, SELECT)
+}
+
+func IsUpdate(sql string) bool {
+	return isByToken(sql, UPDATE)
+}
+
+func isByToken(sql string, token string) bool {
 	sqlLowerCase := strings.ToLower(sql)
+	indexInsert := strings.Index(sqlLowerCase, token)
 
-	indexInsert := strings.Index(sqlLowerCase, INSERT)
-	if indexInsert == 0 {
-		return true
-	}
-
-	return false
+	return indexInsert == 0
 }

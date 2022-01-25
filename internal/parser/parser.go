@@ -11,6 +11,29 @@ const SELECT = "select"
 const UPDATE = "update"
 const DELETE = "delete"
 
+func isByToken(sql string, token string) bool {
+	tokenFields := strings.Fields(token)
+	lenToken := len(tokenFields)
+
+	sqlFields := strings.Fields(strings.ToLower(sql))
+	lenSqlField := len(sqlFields)
+
+	if lenToken > lenSqlField {
+		return false
+	}
+
+	for key := range tokenFields {
+		currentToken := tokenFields[key]
+		currentSqlField := sqlFields[key]
+
+		if currentToken != currentSqlField {
+			return false
+		}
+	}
+
+	return true
+}
+
 func IsCreateTable(sql string) bool {
 	return isByToken(sql, CREATE_TABLE)
 }
@@ -33,11 +56,4 @@ func IsUpdate(sql string) bool {
 
 func IsDelete(sql string) bool {
 	return isByToken(sql, DELETE)
-}
-
-func isByToken(sql string, token string) bool {
-	sqlLowerCase := strings.ToLower(sql) + " "
-	indexInsert := strings.Index(sqlLowerCase, token)
-
-	return indexInsert == 0
 }

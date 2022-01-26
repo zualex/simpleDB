@@ -1,27 +1,45 @@
 package create_table_parser
 
 import (
+	"errors"
 	"fmt"
 	"regexp"
+	"strings"
 )
 
-func Handle(sqlLowerCase string) {
-	// tokens := strings.Fields(sqlLowerCase)
-	// fmt.Println(len(tokens))
-	// fmt.Println(tokens[0])
-	// fmt.Println(tokens[1])
-	// fmt.Println(tokens[2])
-	// fmt.Println(tokens[3])
-	// fmt.Println(tokens[4])
-	// fmt.Println(tokens[5])
+func Handle(sqlLowerCase string) error {
+	isValid, table, fields := getToken(sqlLowerCase)
+	if isValid == false {
+		return errors.New("Не смог распарсить CREATE TABLE")
+	}
 
-	isValid(sqlLowerCase)
+	fmt.Println(table)
+	fmt.Println(fields)
+
+	return nil
 }
 
-func isValid(sql string) bool {
-	// TODO получить группы https://pkg.go.dev/regexp#Regexp.SubexpNames
-	match, ok := regexp.MatchString(`^create table(.*?)\((.*?)\);$`, sql)
-	fmt.Println(match, ok)
+func getToken(sql string) (bool, string, []string) {
+	re := regexp.MustCompile(`^create table(?P<table>.*?)\((?P<fields>.*?)\);$`)
+	isValid := re.MatchString(sql)
+	sqlFields := re.FindStringSubmatch(sql)
 
-	return false
+	if isValid == false || len(sqlFields) != 3 {
+		return false, "", []string{}
+	}
+
+	tableName := strings.TrimSpace(sqlFields[1])
+	fieldString := getFields(sqlFields[2])
+
+	return true, tableName, fieldString
+}
+
+func getFields(fieldString string) []string {
+	fields := strings.Split(strings.TrimSpace(fieldString), ",")
+
+	for i := range fields {
+		fields[i] = strings.TrimSpace(fields[i])
+	}
+
+	return fields
 }

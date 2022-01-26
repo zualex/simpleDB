@@ -3,6 +3,7 @@ package main
 import (
 	"flag"
 	"fmt"
+	"log"
 	"strings"
 
 	"github.com/zualex/simpledb/internal/parser"
@@ -18,6 +19,9 @@ func main() {
 	sqlLowerCase := strings.ToLower(sql)
 
 	if parser.IsCreateTable(sql) {
-		create_table_parser.Handle(sqlLowerCase)
+		err := create_table_parser.Handle(sqlLowerCase)
+		if err != nil {
+			log.Fatal(err)
+		}
 	}
 }

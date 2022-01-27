@@ -1,7 +1,10 @@
 package parser
 
 import (
+	"errors"
 	"strings"
+
+	"github.com/zualex/simpledb/internal/parser/create_table_parser"
 )
 
 const CREATE_TABLE = "create table"
@@ -10,6 +13,16 @@ const INSERT = "insert"
 const SELECT = "select"
 const UPDATE = "update"
 const DELETE = "delete"
+
+func Handle(sql string) error {
+	sqlLowerCase := strings.ToLower(sql)
+
+	if isByToken(sqlLowerCase, CREATE_TABLE) {
+		return create_table_parser.Handle(sqlLowerCase)
+	}
+
+	return errors.New("Некорректный SQL запрос")
+}
 
 func isByToken(sql string, token string) bool {
 	tokenFields := strings.Fields(token)
@@ -32,28 +45,4 @@ func isByToken(sql string, token string) bool {
 	}
 
 	return true
-}
-
-func IsCreateTable(sql string) bool {
-	return isByToken(sql, CREATE_TABLE)
-}
-
-func IsDropTable(sql string) bool {
-	return isByToken(sql, DROP_TABLE)
-}
-
-func IsInsert(sql string) bool {
-	return isByToken(sql, INSERT)
-}
-
-func IsSelect(sql string) bool {
-	return isByToken(sql, SELECT)
-}
-
-func IsUpdate(sql string) bool {
-	return isByToken(sql, UPDATE)
-}
-
-func IsDelete(sql string) bool {
-	return isByToken(sql, DELETE)
 }

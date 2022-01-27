@@ -4,10 +4,8 @@ import (
 	"flag"
 	"fmt"
 	"log"
-	"strings"
 
 	"github.com/zualex/simpledb/internal/parser"
-	"github.com/zualex/simpledb/internal/parser/create_table_parser"
 )
 
 func main() {
@@ -16,12 +14,9 @@ func main() {
 	flag.Parse()
 
 	fmt.Println("sql:", sql)
-	sqlLowerCase := strings.ToLower(sql)
 
-	if parser.IsCreateTable(sql) {
-		err := create_table_parser.Handle(sqlLowerCase)
-		if err != nil {
-			log.Fatal(err)
-		}
+	err := parser.Handle(sql)
+	if err != nil {
+		log.Fatal(err)
 	}
 }

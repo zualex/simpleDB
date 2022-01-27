@@ -5,6 +5,8 @@ import (
 	"fmt"
 	"regexp"
 	"strings"
+
+	"github.com/zualex/simpledb/internal/storage"
 )
 
 func Handle(sqlLowerCase string) error {
@@ -16,7 +18,7 @@ func Handle(sqlLowerCase string) error {
 	fmt.Println(table)
 	fmt.Println(fields)
 
-	return nil
+	return storage.Create(table, fields)
 }
 
 func getToken(sql string) (bool, string, []string) {

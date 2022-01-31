@@ -3,8 +3,8 @@
 
 ## Команды:
 ```
-go run .\cmd\simpledb\ --sql="CREATE TABLE setting (id, name, value);"
-go run .\cmd\simpledb\ --sql="INSERT INTO table (id, name, value) VALUES (1, 'test', 'value');"
+go run .\cmd\simpledb\ --sql="create table setting (id, name, value);"
+go run .\cmd\simpledb\ --sql="insert into table (id, name, value) VALUES (1, 'test', 'value');"
 ```
 
 ## Хранение

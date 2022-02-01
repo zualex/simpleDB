@@ -1,6 +1,7 @@
 package csv
 
 import (
+	"bufio"
 	"encoding/csv"
 	"errors"
 	"os"
@@ -19,12 +20,12 @@ func NewCsv(name string) storage_interface.Storage {
 
 func (csvStorage *csvStorage) Create(fields []string) error {
 	name := csvStorage.name
-	tableName := csvStorage.GetInternalName(name)
+	tableName := csvStorage.GetInternalName()
 	if file.Exists(tableName) {
 		return errors.New("Таблица " + name + " уже существует")
 	}
 
-	csvFile, err := os.Create(tableName)
+	csvFile, err := file.Create(tableName)
 	if err != nil {
 		return err
 	}
@@ -38,6 +39,31 @@ func (csvStorage *csvStorage) Create(fields []string) error {
 	return nil
 }
 
-func (csvStorage *csvStorage) GetInternalName(name string) string {
-	return name + ".csv"
+func (csvStorage *csvStorage) GetInternalName() string {
+	return csvStorage.name + ".csv"
+}
+
+func (csvStorage *csvStorage) GetScheme() ([]string, error) {
+	file, err := openFile(csvStorage.GetInternalName())
+	if err != nil {
+		return nil, err
+	}
+
+	scanner := bufio.NewScanner(file)
+	scanner.Split(bufio.ScanLines)
+	scanner.Scan()
+	fieldString := scanner.Text()
+
+	file.Close()
+
+	return []string{fieldString}, nil
+}
+
+func openFile(filename string) (*os.File, error) {
+	file, err := os.Open(filename)
+	if err != nil {
+		return nil, errors.New("Не удалось открыть " + filename + " ошибка: " + err.Error())
+	}
+
+	return file, nil
 }

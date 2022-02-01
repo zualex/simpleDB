@@ -2,6 +2,10 @@ package file
 
 import "os"
 
+func Create(filename string) (*os.File, error) {
+	return os.Create(filename)
+}
+
 func Exists(filename string) bool {
 	info, err := os.Stat(filename)
 	if os.IsNotExist(err) {

@@ -5,6 +5,7 @@ import (
 	"errors"
 	"os"
 
+	"github.com/zualex/simpledb/internal/file"
 	storage_interface "github.com/zualex/simpledb/internal/storage/interface"
 )
 
@@ -18,8 +19,8 @@ func NewCsv(name string) storage_interface.Storage {
 
 func (csvStorage *csvStorage) Create(fields []string) error {
 	name := csvStorage.name
-	tableName := getTableName(name)
-	if fileExists(tableName) {
+	tableName := csvStorage.GetInternalName(name)
+	if file.Exists(tableName) {
 		return errors.New("Таблица " + name + " уже существует")
 	}
 
@@ -37,15 +38,6 @@ func (csvStorage *csvStorage) Create(fields []string) error {
 	return nil
 }
 
-func getTableName(name string) string {
+func (csvStorage *csvStorage) GetInternalName(name string) string {
 	return name + ".csv"
-}
-
-func fileExists(filename string) bool {
-	info, err := os.Stat(filename)
-	if os.IsNotExist(err) {
-		return false
-	}
-
-	return !info.IsDir()
 }

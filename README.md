@@ -1,6 +1,10 @@
 # SimpleDB
 - https://gobyexample.com/command-line-flags
 
+## План:
+- [ ] Тест для storage.go
+- [ ] Реализовать INSERT
+
 ## Команды:
 ```
 go run .\cmd\simpledb\ --sql="create table setting (id, name, value);"

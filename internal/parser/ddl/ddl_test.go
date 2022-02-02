@@ -1,10 +1,10 @@
-package parser
+package ddl
 
 import (
 	"testing"
 )
 
-func TestIsByTokenTableSuccess(t *testing.T) {
+func TestIsByDdlCommandSuccess(t *testing.T) {
 	m := map[string]string{
 		"CREATE TABLE test": CREATE_TABLE,
 		"create table":      CREATE_TABLE,
@@ -19,14 +19,14 @@ func TestIsByTokenTableSuccess(t *testing.T) {
 	}
 
 	for sql, token := range m {
-		got := isByToken(sql, token)
+		got := isByDdlCommand(sql, token)
 		if got != true {
-			t.Errorf("isByToken(\"%s\") = %t; want true", sql, got)
+			t.Errorf("isByDdlCommand(\"%s\") = %t; want true", sql, got)
 		}
 	}
 }
 
-func TestIsByTokenTableFail(t *testing.T) {
+func TestIsByDdlCommandFail(t *testing.T) {
 	m := map[string]string{
 		"CREATE":          CREATE_TABLE,
 		"tt create table": CREATE_TABLE,
@@ -40,9 +40,9 @@ func TestIsByTokenTableFail(t *testing.T) {
 	}
 
 	for sql, token := range m {
-		got := isByToken(sql, token)
+		got := isByDdlCommand(sql, token)
 		if got != false {
-			t.Errorf("isByToken(\"%s\") = %t; want true", sql, got)
+			t.Errorf("isByDdlCommand(\"%s\") = %t; want true", sql, got)
 		}
 	}
 }

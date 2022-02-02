@@ -1,4 +1,4 @@
-package parser_field
+package field
 
 import "testing"
 

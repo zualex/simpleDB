@@ -1,12 +1,11 @@
-package create_table_parser
+package create_table
 
 import (
 	"errors"
-	"fmt"
 	"regexp"
 	"strings"
 
-	"github.com/zualex/simpledb/internal/parser/parser_field"
+	parser_field "github.com/zualex/simpledb/internal/parser/field"
 	"github.com/zualex/simpledb/internal/storage"
 )
 
@@ -15,9 +14,6 @@ func Handle(sqlLowerCase string) error {
 	if isValid == false {
 		return errors.New("Не смог распарсить CREATE TABLE")
 	}
-
-	fmt.Println(table)
-	fmt.Println(fields)
 
 	return storage.Create(table, fields)
 }

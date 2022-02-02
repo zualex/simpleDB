@@ -7,7 +7,7 @@ import (
 	"os"
 
 	"github.com/zualex/simpledb/internal/file"
-	"github.com/zualex/simpledb/internal/parser/parser_field"
+	parser_field "github.com/zualex/simpledb/internal/parser/field"
 	storage_interface "github.com/zualex/simpledb/internal/storage/interface"
 )
 

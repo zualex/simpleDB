@@ -4,7 +4,7 @@ import (
 	"errors"
 	"strings"
 
-	"github.com/zualex/simpledb/internal/parser/create_table_parser"
+	"github.com/zualex/simpledb/internal/parser/create_table"
 )
 
 const CREATE_TABLE = "create table"
@@ -18,7 +18,7 @@ func Handle(sql string) error {
 	sqlLowerCase := strings.ToLower(sql)
 
 	if isByToken(sqlLowerCase, CREATE_TABLE) {
-		return create_table_parser.Handle(sqlLowerCase)
+		return create_table.Handle(sqlLowerCase)
 	}
 
 	return errors.New("Некорректный SQL запрос")

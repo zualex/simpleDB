@@ -52,7 +52,7 @@ func (csvStorage *csvStorage) GetScheme() ([]string, error) {
 	scanner := bufio.NewScanner(file)
 	scanner.Split(bufio.ScanLines)
 	scanner.Scan()
-	fieldString := scanner.Text()
+	fieldString := scanner.Text() // TODO распарсить на []string
 
 	file.Close()
 

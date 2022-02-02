@@ -6,6 +6,7 @@ import (
 	"regexp"
 	"strings"
 
+	"github.com/zualex/simpledb/internal/parser/parser_field"
 	"github.com/zualex/simpledb/internal/storage"
 )
 
@@ -31,17 +32,7 @@ func getToken(sql string) (bool, string, []string) {
 	}
 
 	tableName := strings.TrimSpace(sqlFields[1])
-	fieldString := getFields(sqlFields[2])
+	fieldString := parser_field.GetFieldsFromString(sqlFields[2])
 
 	return true, tableName, fieldString
-}
-
-func getFields(fieldString string) []string {
-	fields := strings.Split(strings.TrimSpace(fieldString), ",")
-
-	for i := range fields {
-		fields[i] = strings.TrimSpace(fields[i])
-	}
-
-	return fields
 }

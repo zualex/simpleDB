@@ -23,12 +23,20 @@ func TestMain(m *testing.M) {
 }
 
 func TestCreateSuccess(t *testing.T) {
-	err := csvPackageTest.Create([]string{"id", "field"})
+	fields := []string{"id", "field"}
+	err := csvPackageTest.Create(fields)
 	if err != nil {
 		t.Errorf("storage.Create(\"%s\") error: %s", name, err)
 	}
 
 	scheme, err := csvPackageTest.GetScheme()
-	t.Error(scheme)
-	t.Error(err)
+	if len(scheme) != 2 {
+		t.Errorf("csvPackageTest.GetScheme() length: %d", len(scheme))
+	}
+	if scheme[0] != fields[0] {
+		t.Errorf("csvPackageTest.GetScheme() scheme[0]: %s, expected: %s", scheme[0], fields[0])
+	}
+	if scheme[1] != fields[1] {
+		t.Errorf("csvPackageTest.GetScheme() scheme[1]: %s, expected: %s", scheme[1], fields[1])
+	}
 }

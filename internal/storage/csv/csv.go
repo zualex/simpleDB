@@ -7,6 +7,7 @@ import (
 	"os"
 
 	"github.com/zualex/simpledb/internal/file"
+	"github.com/zualex/simpledb/internal/parser/parser_field"
 	storage_interface "github.com/zualex/simpledb/internal/storage/interface"
 )
 
@@ -52,11 +53,11 @@ func (csvStorage *csvStorage) GetScheme() ([]string, error) {
 	scanner := bufio.NewScanner(file)
 	scanner.Split(bufio.ScanLines)
 	scanner.Scan()
-	fieldString := scanner.Text() // TODO распарсить на []string
+	fieldString := scanner.Text()
 
 	file.Close()
 
-	return []string{fieldString}, nil
+	return parser_field.GetFieldsFromString(fieldString), nil
 }
 
 func openFile(filename string) (*os.File, error) {

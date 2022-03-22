@@ -2,13 +2,13 @@
 - https://gobyexample.com/command-line-flags
 
 ## План:
-- [ ] Тест для storage.go
 - [ ] Реализовать INSERT
+- [ ] Тесты для INSERT
 
 ## Команды:
 ```
 go run .\cmd\simpledb\ --sql="create table setting (id, name, value);"
-go run .\cmd\simpledb\ --sql="insert into table (id, name, value) VALUES (1, 'test', 'value');"
+go run .\cmd\simpledb\ --sql="insert into setting (id, name, value) VALUES (1, 'test', 'value');"
 ```
 
 ## Хранение

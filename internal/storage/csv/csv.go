@@ -40,6 +40,39 @@ func (csvStorage *csvStorage) Create(fields []string) error {
 	return nil
 }
 
+func (csvStorage *csvStorage) Insert(valueMap map[string]string) error {
+	name := csvStorage.name
+	tableName := csvStorage.GetInternalName()
+	if file.Exists(tableName) == false {
+		return errors.New("Таблица " + name + " не существует")
+	}
+
+	csvFile, err := file.Open(tableName)
+	if err != nil {
+		return err
+	}
+
+	csvreader := csv.NewReader(csvFile)
+	headerFields, err := csvreader.Read()
+
+	values := []string{}
+	for _, header := range headerFields {
+		if val, ok := valueMap[header]; ok {
+			values = append(values, val)
+		} else {
+			values = append(values, "") // TODO прокидывать более умное дефолтное значение
+		}
+	}
+
+	csvwriter := csv.NewWriter(csvFile)
+	csvwriter.Write(values)
+
+	csvwriter.Flush()
+	csvFile.Close()
+
+	return nil
+}
+
 func (csvStorage *csvStorage) GetInternalName() string {
 	return csvStorage.name + ".csv"
 }

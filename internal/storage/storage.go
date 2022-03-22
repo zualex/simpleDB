@@ -12,3 +12,7 @@ func getProvider(name string) storage_interface.Storage {
 func Create(name string, fields []string) error {
 	return getProvider(name).Create(fields)
 }
+
+func Insert(name string, valueMap map[string]string) error {
+	return getProvider(name).Insert(valueMap)
+}

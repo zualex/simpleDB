@@ -13,6 +13,10 @@ func IsCreateTable(sql string) bool {
 	return isByDdlCommand(sql, CREATE_TABLE)
 }
 
+func IsInsert(sql string) bool {
+	return isByDdlCommand(sql, INSERT)
+}
+
 func isByDdlCommand(sql string, ddlCommand string) bool {
 	tokenFields := strings.Fields(ddlCommand)
 	lenToken := len(tokenFields)

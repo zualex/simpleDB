@@ -8,7 +8,7 @@
 ## Команды:
 ```
 go run .\cmd\simpledb\ --sql="create table setting (id, name, value);"
-go run .\cmd\simpledb\ --sql="insert into setting (id, name, value) VALUES (1, 'test', 'value');"
+go run .\cmd\simpledb\ --sql="insert into setting (id, name, value) values (1, 'test', 'value');"
 ```
 
 ## Хранение
